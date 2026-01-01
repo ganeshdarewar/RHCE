@@ -1,0 +1,131 @@
+  103  ansible all -m command -a 'yum update'
+  104  ansible all -m command -a 'sudo subscription-manager register --username=darewarganesh --password=15da0327tuGanu@2802
+  105  '
+  106  ansible all -m command -a 'yum update'
+  107  ansible all -m command -a 'yum updateinfo --security list'
+  108  ansible all -m command -a 'yum update'
+  109  ansible all -m command -a 'yum update' -b
+  110  cd
+  111  ansible all -m copy -a 'content="Nehra classes" dest=/tmp/nehraclasses.txt backup=yes'
+  112  ansible all -m command -a 'ls /tmp'
+  113  ansible all -m copy -a 'content="Nehra classes Ganesh" dest=/tmp/nehraclasses.txt backup=yes'
+  114  ansible all -m command -a 'ls /tmp'
+  115  ansible all -m command -a 'cat nehraclasses.txt'
+  116  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  117  # lineinfile module
+  118  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="This server is managed by ansible server"'
+  119  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  120  ansible all -m command -a 'cat /tmp/nehraclasses.txt insertafter=BOF'
+  121  ansible all -m command -a 'cat /tmp/nehraclasses.txt inserafter=BOF'
+  122  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="This server is managed by ansible server" inserafter=BOF'
+  123  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="This server is managed by ansible server" insertafter=BOF'
+  124  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  125  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="Hi Ganesh" insertafter=BOF'
+  126  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="Hi Ganesh" insertafter=EOF'
+  127  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="Hi Ganesh Darewar" insertafter=EOF'
+  128  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  129  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="RHCE" insertafter=This'
+  130  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  131  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt line="RHCE" state=absent'
+  132  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  133  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt regexp=This'
+  134  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt regexp=This state=present'
+  135  ansible all -m lineinfile -a 'dest=/tmp/nehraclasses.txt regexp=This state=absent'
+  136  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  137  sudo vi /etc/ansible/ansible.cfg
+  138  sudo vi /etc/ansible/hosts
+  139  ssh-keygen
+  140  ssh-copy-id nehraclasses@192.168.14.133
+  141  ssh nehraclasses@192.168.14.133
+  142  ansible all -m ping
+  143*
+  144  ansible all -m copy -a "src=/tmp/nehraclasses.txt dest=/tmp/nehraclasses.txt remote_src=yes"
+  145  ansible -m command -a 'cat /tmp/nehraclasses.txt'
+  146  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  147  ansible all -m copy -a "src=/tmp/nehraclasses.txt dest=/tmp/nehraclasses.txt remote_src=yes"
+  148  ansible 192.168.14.133 -m synchronize -a "src=/tmp/nehraclasses.txt dest=/tmp/nehraclasses.txt" --delegate_to 192.168.14.129
+  149  ansible 192.168.14.133 -m shell -a "echo 'Hello from Ganesh' > /tmp/nehraclasses.txt"
+  150  ansible all -m copy -a "src=/tmp/nehraclasses.txt dest=/tmp/nehraclasses.txt remote_src=yes"
+  151  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  152  ansible all -m ping
+  153  sudo vi /etc/ansible/hosts
+  154  ansible all -m ping
+  155  sudo vi /etc/hosts
+  156  ansible all -m ping
+  157  sudo vi /etc/hosts
+  158  ansible node1 -m ping
+  159  ansible node2 -m ping
+  160  ansible all -m ping
+  161  sudo vi /etc/ansible/hosts
+  162  ansible all -m ping
+  163  # replace module
+  164  ansible all -m replace -a 'dest=/tmp/nehraclasses.txt regexp=Ganesh replace=Ganu'
+  165  ansible all -m command -a 'cat /tmp/nehraclasses.txt'
+  166  # user module
+  167  ansible rhel -m user -a 'name=amit state=present uid=1010 group=wheel'
+  168  ansible rhel -m user -a 'name=amit state=present uid=1010 group=wheel' -b
+  169  anible node1 -m command -a 'id amit'
+  170  ansible node1 -m command -a 'id amit'
+  171  ansible rhel -m user -a 'name=amit state=absent'
+  172  ansible rhel -m user -a 'name=amit state=absent' -b
+  173  ansible node1 -m command -a 'id amit'
+  174  # group module
+  175  ansible all -m group -a 'name=staff state=present gid=1015'
+  176  ansible all -m group -a 'name=staff state=present gid=1015' -b
+  177  ansible node2 -m lineinfile -a 'path=/etc/sudoers line=nehraclasses    ALL=(ALL)       NOPASSWD: ALL'
+  178  ansible node2 -m lineinfile -a 'path=/etc/sudoers line="nehraclasses    ALL=(ALL)       NOPASSWD: ALL"'
+  179  ansible node2 -m lineinfile -a 'path=/etc/sudoers line="nehraclasses    ALL=(ALL)       NOPASSWD: ALL"' -b
+  180  ansible node2 -m lineinfile -a 'path=/etc/sudoers line="nehraclasses    ALL=(ALL)       NOPASSWD: ALL"' -b -k
+  181  ansible node2 -m lineinfile -a 'path=/etc/sudoers line="nehraclasses    ALL=(ALL)       NOPASSWD: ALL"' -u root
+  182  ansible node2 -m lineinfile -a 'path=/etc/sudoers line="nehraclasses    ALL=(ALL)       NOPASSWD: ALL"' -u root -k
+  183  ansible all -m group -a 'name=staff state=present gid=1015' -
+  184  ansible all -m group -a 'name=staff state=present gid=1015'
+  185  ansible node2 -m group -a 'name=staff state=present gid=1015' -b
+  186  ansible all -m group -a 'name=staff state=present gid=1015'
+  187  ansible all -m group -a 'name=staff state=absent'
+  188  ansible all -m group -a 'name=staff state=absent' -b
+  189  ansible all -m command -a 'tail -1 /etc/group'
+  190  # yum/dnf/package moduel
+  191  ansible all -m yum -a 'name=zsh state=present'
+  192  ansible all -m yum -a 'name=zsh state=present' -b
+  193  sudo vi /etc/hosts
+  194  sudo vi /etc/ansible/ansible.cfg
+  195  ansible all -m yum -a 'name=zsh state=present'
+  196  ansible all -m yum -a 'name=zsh state=present' -b
+  197  sudo vi /etc/ansible/ansible.cfg
+  198  ansible all -m yum -a 'name=zsh state=present'
+  199  ansibel all -m command -a 'rpm -qi zsh'
+  200  ansible all -m command -a 'rpm -qi zsh'
+  201  ansible ubuntu -m apt -a 'name=zsh state=present'
+  202  ansible all -m command -a 'rpm -qi zsh'
+  203  ansible ubuntu -m command -a 'apt list zsh'
+  204  ansible rhel -m package -a 'name=ksh state=installed use=dnf'
+  205  ansible rhel -m command -a 'rpm -qa ksh'
+  206  ansible rhel -m command -a 'rpm -qa ksh --last'
+  207  ansible ubub -m package -a 'name=ksh state=installed use=apt'
+  208  ansible ubuntu -m package -a 'name=ksh state=installed use=apt'
+  209  vi local.repo
+  210  cat /etc/local.repo
+  211  ll
+  212  cd /etc/yum.repos.d/
+  213  ll
+  214  cat redhat.repo
+  215  cd
+  216  vi local.repo
+  217  ansible rhel -m copy -a 'src=local.repo dest=/etc/yum.repos.d/local.repo'
+  218  ansible -m rhel -m command -a 'lsblk'
+  219  ansible rhel -m command -a 'lsblk'
+  220  ansible rhel -m command -a 'umount /run/media/student/RHEL-9-0-0-BaseOS-x86_64'
+  221  ansible rhel -m command -a 'mount /dev/sr0 /mnt'
+  222  ansible rhel -m command -a 'lsblk'
+  223  ansible rhel -m command -a 'yum repolist all'
+  224  # yum repository
+  225  ansible rhel -m yum_repository -a 'test description="test repo" baseurl=file:///mnt/AppStream enabled=1 gpgcheck=0'
+  226  ansible rhel -m yum_repository -a 'test description="test repo" baseurl=file:///mnt/AppStream enabled=1 gpgcheck=0 '
+  227  ansible rhel -m yum_repository -a 'name=test description="test repo" baseurl=file:///mnt/AppStream enabled=1 gpgcheck=0 '
+  228  ansible rhel -m command -a 'yum repolist all'
+  229  ansible rhel -m command -a 'cat /etc/yum.repos.d/test.po'
+  230  ansible rhel -m command -a 'cat /etc/yum.repos.d/test.repo'
+  231  ansible rhel -m yum_repository -a 'name=test state=absent'
+  232  ansible rhel -m command -a 'cat /etc/yum.repos.d/test.repo state=absent'
+  233  ansible rhel -m command -a 'cat /etc/yum.repos.d/test.repo '

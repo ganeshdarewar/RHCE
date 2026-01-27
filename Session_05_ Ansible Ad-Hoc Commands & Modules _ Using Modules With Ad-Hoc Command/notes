@@ -1,0 +1,30 @@
+
+[nehraclasses@server yum.repos.d]$ ansible rhel-client -m raw -a 'rm /etc/yum.repos.d/AppStream.repo' -b
+rhel-client | CHANGED | rc=0 >>
+Shared connection to rhel-client closed.
+
+[nehraclasses@server yum.repos.d]$ ansible rhel-client -m yum_repository -a 'name=local description="local repo" baseurl=file:///mnt/AppStream enabled=1 gpgcheck=0' -b
+rhel-client | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "repo": "local",
+    "state": "present"
+}
+[nehraclasses@server yum.repos.d]$ ansible rhel-client -m raw -a 'ls -l /etc/yum.repos.d/'
+rhel-client | CHANGED | rc=0 >>
+total 4
+-rw-r--r--. 1 root root 84 Jan 27 20:15 local.repo
+Shared connection to rhel-client closed.
+
+[nehraclasses@server yum.repos.d]$ ansible rhel-client -m raw -a 'cat /etc/yum.repos.d/local.repo'
+rhel-client | CHANGED | rc=0 >>
+[local]
+baseurl = file:///mnt/AppStream
+enabled = 1
+gpgcheck = 0
+name = local repo
+
+Shared connection to rhel-client closed.
+

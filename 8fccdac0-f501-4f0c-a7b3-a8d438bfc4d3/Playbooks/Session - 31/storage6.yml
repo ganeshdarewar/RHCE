@@ -1,0 +1,17 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create first partition having GPT label
+      parted:
+        label: gpt
+        state: present
+        device: /dev/sda
+        number: 6
+        name: p1
+        flags: [ lvm ]
+        part_start: 0%
+        part_end: 10%
+        unit: '%'
+...

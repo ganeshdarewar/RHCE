@@ -1,0 +1,11 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Blank filesystem signature on /dev/sda1
+      filesystem:
+        dev: /dev/sda1
+        state: absent
+...
+

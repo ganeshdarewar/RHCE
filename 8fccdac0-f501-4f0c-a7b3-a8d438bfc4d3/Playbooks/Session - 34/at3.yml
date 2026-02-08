@@ -1,0 +1,11 @@
+---
+- name: Schedule Future Jobs
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove an existing task
+      ansible.posix.at:
+         command: uptime > /tmp/uptime.txt
+         state: absent  
+...
+

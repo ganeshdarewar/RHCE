@@ -1,0 +1,14 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Reset both volume group and pv UUID
+      community.general.lvg:
+        state: inactive
+        vg: resizableVG
+        pvs: /dev/sda1
+        reset_vg_uuid: true
+        reset_pv_uuid: true
+...
+

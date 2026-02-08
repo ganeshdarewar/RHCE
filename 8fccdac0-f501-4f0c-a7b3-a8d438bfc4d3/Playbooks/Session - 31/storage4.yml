@@ -1,0 +1,13 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a new primary partition for LVM
+      parted:
+        device: /dev/sda
+        number: 2
+        flags: [ lvm ]
+        state: present
+        part_start: 1GiB
+...

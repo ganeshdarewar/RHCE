@@ -1,0 +1,12 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a volume group on top of /dev/sda1 and resize the volume group /dev/sda1 to the maximum possible
+      community.general.lvg:
+        vg: resizableVG
+        pvs: /dev/sda1
+        pvresize: true
+...
+

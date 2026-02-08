@@ -1,0 +1,11 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+    - name: Add repository
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+...

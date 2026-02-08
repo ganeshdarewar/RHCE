@@ -1,0 +1,18 @@
+---
+- name: Manage Firewall
+  hosts: node1
+  become: true
+  tasks:
+    - name: Allow traffic from UDP ports 161 & 162 in the firewall.
+      ansible.posix.firewalld:
+         port: 161-162/udp
+         permanent: true
+         state: enabled
+         immediate: true
+    - name: Allow the http traffic in the DMZ zone.
+      ansible.posix.firewalld:
+        zone: dmz
+        service: http
+        permanent: true
+        state: enabled
+        immediate: true

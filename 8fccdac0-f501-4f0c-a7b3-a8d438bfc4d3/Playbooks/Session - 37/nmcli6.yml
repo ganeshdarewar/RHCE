@@ -1,0 +1,14 @@
+---
+- name: manage networking
+  hosts: node1
+  become: true
+  tasks:
+      - name: Add an Ethernet connection with dynamic IPv4 (DHCP) configuration
+        nmcli:
+          conn_name: ens224
+          ifname: ens224
+          type: ethernet
+          method4: auto
+          state: present
+          autoconnect: true
+...

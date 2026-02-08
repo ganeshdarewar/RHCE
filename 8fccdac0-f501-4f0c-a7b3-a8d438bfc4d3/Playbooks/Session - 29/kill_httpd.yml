@@ -1,0 +1,19 @@
+---
+- name: process management using ansible playbook
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Get running processes list from remote host
+      ignore_errors: yes
+      shell: "ps -few | grep httpd | awk '{print $2}'"
+      register: running_processes
+
+    - name: Printing the process IDs of the httpd processes
+      debug:
+        msg: "{{ running_processes }}"
+
+    - name: Kill the running httpd processes
+      ignore_errors: yes
+      shell: "kill -9 {{ item }}"
+      with_items: "{{ running_processes.stdout_lines }}"
+...

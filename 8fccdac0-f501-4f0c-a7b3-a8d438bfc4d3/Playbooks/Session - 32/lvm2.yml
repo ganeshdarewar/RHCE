@@ -1,0 +1,13 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create cache pool logical volume
+      community.general.lvol:
+        vg: nehraclasses
+        lv: lvcache
+        size: 512m
+        opts: --type cache-pool
+...
+

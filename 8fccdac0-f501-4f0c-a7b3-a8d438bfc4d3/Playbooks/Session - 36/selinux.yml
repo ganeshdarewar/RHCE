@@ -1,0 +1,10 @@
+---
+- name: Manage SELinux
+  hosts: node1
+  become: true
+  tasks:
+    - name: Set SELinux to Permissive mode
+      ansible.posix.selinux:
+        policy: targeted
+        state: permissive
+...

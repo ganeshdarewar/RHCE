@@ -1,0 +1,13 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Resize the logical volume to % of VG
+      community.general.lvol:
+        vg: nehraclasses
+        lv: test
+        size: 20%VG
+        force: true
+...
+

@@ -1,0 +1,13 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a thin volume of 300m
+      community.general.lvol:
+        vg: nehraclasses
+        lv: test6
+        thinpool: testpool
+        size: 300m
+...
+

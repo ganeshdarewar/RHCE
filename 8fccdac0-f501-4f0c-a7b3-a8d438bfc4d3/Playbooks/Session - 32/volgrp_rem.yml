@@ -1,0 +1,11 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove a volume group with name nehraclasses
+      community.general.lvg:
+        vg: nehraclasses
+        state: absent
+...
+

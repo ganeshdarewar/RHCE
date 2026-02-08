@@ -1,0 +1,13 @@
+---
+- name: Manage SELinux
+  hosts: node1
+  become: true
+  tasks:
+    - name: Allow Apache to modify files in /tmp directory
+      community.general.sefcontext:
+        target: '/tmp(/.*)?'
+        setype: httpd_sys_rw_content_t
+        state: present
+    - name: Apply SELinux file context
+      ansible.builtin.command: restorecon -irv /tmp
+...

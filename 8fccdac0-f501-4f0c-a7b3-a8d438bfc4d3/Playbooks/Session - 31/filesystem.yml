@@ -1,0 +1,11 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create an ext2 filesystem on /dev/sda1
+      filesystem:
+        fstype: ext2
+        dev: /dev/sda1
+        force: true
+...

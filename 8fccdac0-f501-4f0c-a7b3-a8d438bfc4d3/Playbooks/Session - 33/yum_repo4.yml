@@ -1,0 +1,12 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove repository from a specific repo file
+      yum_repository:
+        name: epel2
+        file: external_repos
+        state: absent
+...
+

@@ -1,0 +1,12 @@
+---
+- name: Manage Firewall
+  hosts: node1
+  become: true
+  tasks:
+    - name: permit ospf traffic
+      ansible.posix.firewalld:
+        protocol: ospf
+        permanent: true
+        state: enabled
+...
+

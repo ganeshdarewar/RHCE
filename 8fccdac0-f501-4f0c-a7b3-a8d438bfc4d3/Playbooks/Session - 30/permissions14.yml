@@ -1,0 +1,13 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove user vikasnehra access to a file.
+      acl:
+        path: /etc/redhat-release
+        entity: vikasnehra
+        etype: user
+        state: absent
+...
+

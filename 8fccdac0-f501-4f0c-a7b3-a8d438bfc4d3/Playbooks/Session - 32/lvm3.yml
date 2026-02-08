@@ -1,0 +1,12 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a logical volume the size of all remaining space in the volume group
+      community.general.lvol:
+        vg: nehraclasses
+        lv: test2
+        size: 100%FREE
+...
+

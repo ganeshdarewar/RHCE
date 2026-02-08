@@ -1,0 +1,11 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a volume group on top of /dev/sdb with physical extent size = 128KiB
+      community.general.lvg:
+        vg: nehraclasses
+        pvs: /dev/sdb
+        pesize: 128K
+...

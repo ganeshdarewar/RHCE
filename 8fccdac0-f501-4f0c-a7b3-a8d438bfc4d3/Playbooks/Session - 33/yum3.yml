@@ -1,0 +1,16 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+    - name: Install a list of packages with a list variable
+      yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+           - httpd
+           - httpd-tools
+           - ftp
+           - vsftpd
+...
+

@@ -1,0 +1,12 @@
+---
+- name: Schedule Future Jobs
+  hosts: node1
+  become: true
+  tasks:
+    - name: Show who is logged on and what they are doing at system reboot.
+      ansible.builtin.cron:
+        name: "System Info"
+        special_time: reboot
+        job: "w > /tmp/systeminfo.txt"
+...
+

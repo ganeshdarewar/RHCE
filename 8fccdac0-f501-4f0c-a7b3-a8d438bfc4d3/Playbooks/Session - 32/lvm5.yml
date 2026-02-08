@@ -1,0 +1,14 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+     - name: Create a logical volume with special options (Read ahead sectors)
+# Readahead is a system call of the Linux kernel that loads a file's contents into the page cache.
+       community.general.lvol:
+         vg: nehraclasses
+         lv: test3
+         size: 5g
+         opts: -r 16
+...
+

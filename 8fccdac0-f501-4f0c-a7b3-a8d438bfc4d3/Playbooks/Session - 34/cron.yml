@@ -1,0 +1,12 @@
+---
+- name: Schedule Future Jobs
+  hosts: node1
+  become: true
+  tasks:
+        - name: Capture the users login information in /tmp/login.txt file at 2 & 5 hours.
+          ansible.builtin.cron:
+            name: "Users Login"
+            minute: "0"
+            hour: "2,5"
+            job: "who > /tmp/login.txt"
+...

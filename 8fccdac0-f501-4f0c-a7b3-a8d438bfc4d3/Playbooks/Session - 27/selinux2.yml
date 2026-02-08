@@ -1,0 +1,13 @@
+---
+- name: Change SELINUX mode in the configuration file.
+  hosts: node1
+  become: true
+  vars:
+    status: permissive
+  tasks:
+    - name: Changing the SELINUX mode in the /etc/selinux/config file.
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX={{ status }}'
+...

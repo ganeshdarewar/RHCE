@@ -1,0 +1,11 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+     - name: Install the 'Development tools' package group
+       yum:
+         name: "@Development tools"
+         state: present
+...
+

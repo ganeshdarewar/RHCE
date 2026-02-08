@@ -1,0 +1,13 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+    - name: Install a list of packages.
+      dnf:
+        name:
+          - nginx
+          - postgresql
+          - postgresql-server
+        state: present
+...

@@ -1,0 +1,11 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+    - name: Upgrade all packages, excluding kernel & foo related packages
+      dnf:
+        name: '*'
+        state: latest
+        exclude: kernel*,chrony*
+...

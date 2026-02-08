@@ -1,0 +1,14 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Mount DVD read-only
+      ansible.posix.mount:
+         path: /tmp
+         src: /dev/sr0
+         fstype: iso9660
+         opts: ro
+         state: mounted
+...
+

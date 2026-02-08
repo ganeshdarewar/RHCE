@@ -1,0 +1,12 @@
+---
+- name: Yum Repository Management
+  hosts: node1
+  become: true
+  tasks:
+     - name: Install nginx rpm from a local file
+       yum:
+          name: /home/vikasnehra/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+          state: present
+          disable_gpg_check: true
+...
+

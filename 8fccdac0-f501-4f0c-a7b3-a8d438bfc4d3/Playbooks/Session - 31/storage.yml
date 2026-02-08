@@ -1,0 +1,12 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a new ext4 primary partition on /dev/sda disk
+      parted:
+        device: /dev/sda
+        number: 1
+        state: absent
+        fs_type: ext4
+...

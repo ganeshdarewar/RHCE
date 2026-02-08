@@ -1,0 +1,28 @@
+---
+- name: Manage Firewall
+  hosts: node1
+  become: true
+  tasks:
+    - ansible.posix.firewalld:
+        zone: public
+        state: enabled
+        permanent: true
+        icmp_block_inversion: true
+        immediate: true
+
+    - ansible.posix.firewalld:
+        zone: drop
+        state: enabled
+        permanent: true
+        icmp_block: echo-request
+        immediate: true
+
+    - name: Redirect port 443 to 8443 with Rich Rule
+      ansible.posix.firewalld:
+        rich_rule: rule family=ipv4 forward-port port=443 protocol=tcp to-port=8443
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+...
+

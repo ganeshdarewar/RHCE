@@ -1,0 +1,10 @@
+---
+- name: iSCSI Client Configuration Playbook
+  hosts: node3
+  become: true
+  tasks:
+    - name: Run the iscsi-initiator.sh script which does not exists on the remote node.
+      script: /home/vikasnehra/iscsi-initiator.sh
+      args:
+        creates: /home/vikasnehra/iscsi-initiator.sh
+...

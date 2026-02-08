@@ -1,0 +1,19 @@
+---
+- name: Manage SELinux
+  hosts: node1
+  become: true
+  tasks:
+    - name: Allow sshd to listen on tcp port 20224
+      community.general.seport:
+        ports: 20224
+        proto: tcp
+        setype: ssh_port_t
+        state: present
+
+    - name: Allow memcached to listen on a range of ports
+      community.general.seport:
+        ports: 10000-10100,10112
+        proto: tcp
+        setype: memcache_port_t
+        state: present
+...

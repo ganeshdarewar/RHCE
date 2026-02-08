@@ -1,0 +1,48 @@
+---
+- name: Samba Server Configuration Playbook
+  hosts: node1
+  become: true
+  tasks:
+    - name: Setting up the static hostname in the machine.
+      hostname:
+        name: samba.nehraclasses.local
+        use: systemd
+
+    - name: Installing the Samba Packages
+      dnf:
+        name: samba*
+        state: latest
+
+    - name: Creating the directory for the samba share.
+      file:
+        path: /srv/samba/anonymous
+        mode: '0755'
+        state: directory
+        owner: nobody
+        group: nobody
+
+    - name: Managing SELinux label on the samba share directory.
+      command: chcon -t samba_share_t /srv/samba/anonymous
+
+    - name: Copying the samba configuration file on the managed node.
+      template:
+        src: smb.conf.j2
+        dest: /etc/samba/smb.conf
+        force: true
+
+    - name: Allowing samba traffic in the firewall.
+      firewalld:
+        service: samba
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+    - name: Starting & enabling the smb & nmb services.
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - smb
+        - nmb
+...

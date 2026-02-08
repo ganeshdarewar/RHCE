@@ -1,0 +1,24 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a directory as vikasnehra under /etc/linux/
+      file:
+        path: /etc/linux/vikasnehra
+        state: directory
+      register: result
+
+    - name: Printing the result of the previous task
+      debug:
+        msg: "{{ result }}"
+
+    - name: Recursively change ownership of the vikasnehra directory
+      file:
+        path: /etc/linux
+        state: directory
+        recurse: yes
+        owner: vikasnehra
+        group: vikasnehra
+...
+

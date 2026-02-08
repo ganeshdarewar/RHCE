@@ -1,0 +1,13 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a deactivated logical volume
+      community.general.lvol:
+        vg: nehraclasses
+        lv: test4
+        active: false
+        force: true
+...
+

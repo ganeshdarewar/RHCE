@@ -1,0 +1,15 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Same as previous but using entry short-hand
+      acl:
+        path: /etc/linux/
+        entry: default:user:vikasnehra:rw-
+        state: present
+      register: acl_info
+    - name: Obtain the ACL for a specific file
+      debug:
+        msg: "{{ acl_info }}"
+...

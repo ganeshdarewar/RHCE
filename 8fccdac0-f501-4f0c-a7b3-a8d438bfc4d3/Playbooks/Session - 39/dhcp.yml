@@ -1,0 +1,35 @@
+---
+- name: DHCP Server Configuration Playbook
+  hosts: node1
+  become: true
+  tasks:
+   - name: Setting up the static hostname in the machine.
+     hostname:
+        name: dhcp-server.nehraclasses.local
+        use: systemd
+
+   - name: Installing DHCP packages in the machine.
+     dnf:
+        name: dhcp*
+        state: latest
+
+   - name: Coying the configuration file into the /etc/dhcp directory using jinja2 template.
+     template:
+        src: dhcp.conf.j2
+        dest: /etc/dhcp/dhcpd.conf
+        force: true
+          
+   - name: Allowing DHCP traffic in the firewall.
+     firewalld:
+        service: dhcp
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+   - name: Starting & enabling the DHCPD service.
+     service:
+        name: dhcpd
+        state: started
+        enabled: yes
+...

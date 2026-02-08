@@ -1,0 +1,11 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create or resize a volume group on top of /dev/sdc.
+      community.general.lvg:
+         vg: nehraclasses
+         pvs: /dev/sdc
+...
+

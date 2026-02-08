@@ -1,0 +1,19 @@
+---
+- name: Manage Firewall
+  hosts: node1
+  become: true
+  tasks:
+    - ansible.posix.firewalld:
+        rich_rule: rule service name="ftp" audit limit value="1/m" accept
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - ansible.posix.firewalld:
+        zone: trusted
+        interface: ens160
+        permanent: true
+        state: enabled
+        immediate: true
+...
+

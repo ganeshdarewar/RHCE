@@ -1,0 +1,17 @@
+$TTL 86400
+@ IN SOA dns-primary.nehraclasses.edu. admin.nehraclasses.edu. (
+                2020011800 ;Serial
+                3600 ;Refresh
+                1800 ;Retry
+                604800 ;Expire
+                86400 ;Minimum TTL
+)
+;Name Server Inforamtion
+@ IN NS dns-primary.nehraclasses.edu.
+dns-primary IN A 192.168.229.129
+;Reverse lookup for name server
+129 IN PTR dns-primary.nehraclasses.edu.
+;PTR Record IP Address to Hostname
+50 IN PTR www.nehraclasses.edu.
+60 IN PTR mail.nehraclasses.edu.
+

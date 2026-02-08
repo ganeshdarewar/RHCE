@@ -1,0 +1,21 @@
+---
+- name: manage networking
+  hosts: node1
+  become: true
+  tasks:
+    - name: Add an Ethernet connection with static IPv4, 2 DNSs & IPv6 configuration
+      community.general.nmcli:
+        conn_name: ens224
+        ifname: ens224
+        type: ethernet
+        ip4: 192.168.229.150/24
+        gw4: 192.168.229.128
+        dns4: 
+           - 8.8.8.8
+           - 192.168.1.1
+        ip6: 2001:db8::cafe
+        gw6: 2001:db8::1
+        state: present
+        autoconnect: true
+...
+

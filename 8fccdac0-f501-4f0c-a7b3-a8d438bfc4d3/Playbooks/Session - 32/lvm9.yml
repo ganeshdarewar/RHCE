@@ -1,0 +1,12 @@
+---
+- name: Managing Volume Groups
+  hosts: node1
+  become: true
+  tasks:
+     - name: Extend the logical volume by given space
+       community.general.lvol:
+         vg: nehraclasses
+         lv: test
+         size: +512M
+...
+

@@ -1,0 +1,13 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Grant user vikasnehra read access to a file.
+      ansible.posix.acl:
+        path: /etc/redhat-release
+        entity: vikasnehra
+        etype: user
+        permissions: r
+        state: present
+...

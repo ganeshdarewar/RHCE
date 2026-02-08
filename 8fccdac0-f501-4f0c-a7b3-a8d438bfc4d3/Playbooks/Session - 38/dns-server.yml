@@ -1,0 +1,82 @@
+---
+- name: Authoritative DNS Server Configuration Playbook
+  hosts: node1
+  become: true
+  tasks:
+    - name: Setting up the static hostname in the machine.
+      command: hostnamectl set-hostname dns-primary.nehraclasses.edu
+
+    - name: Installing the bind packages in the machine.
+      dnf:
+        name:
+          - bind
+          - bind-utils
+        state: latest
+
+    - name: Making changes in the /etc/named.conf configuration file. (Comment listen-on port 53 line)
+      replace:
+        path: /etc/named.conf
+        regexp: 'listen-on port 53 { 127.0.0.1; };'
+        replace: '//listen-on port 53 { 127.0.0.1; };'
+
+    - name: Making changes in the /etc/named.conf configuration file. (Comment listen-on-v6 port 53 line)
+      replace:
+        path: /etc/named.conf
+        regexp: 'listen-on-v6 port 53 { ::1; };'
+        replace: '//listen-on-v6 port 53 { ::1; };'
+
+    - name: Making changes in the /etc/named.conf configuration file. (Modify allow-query line)
+      replace:
+        path: /etc/named.conf
+        regexp: 'allow-query     { localhost; };'
+        replace: 'allow-query     { localhost; 192.168.229.0/24; };'
+
+    - name: Making changes in the /etc/named.conf configuration file. (Zone info)
+      blockinfile:
+        path: /etc/named.conf
+        insertafter: EOF
+        block: |
+          //forward zone
+          zone "nehraclasses.edu" IN {
+          type master;
+          file "nehraclasses.edu.db";
+          allow-update { none; };
+          allow-query { any; };
+          };
+
+          //reverse zone
+          zone "229.168.192.in-addr.arpa" IN {
+          type master;
+          file "nehraclasses.edu.rev";
+          allow-update { none; };
+          allow-query { any; };
+          };
+    - name: Creating forward lookup zone file using ansible jinja2 template file
+      template:
+        src: forward.j2
+        dest: /var/named/nehraclasses.edu.db
+        owner: named
+        group: named
+
+    - name: Creating reverse lookup zone file using ansible jinja2 template file      
+      template:
+        src: reverse.j2
+        dest: /var/named/nehraclasses.edu.rev
+        owner: named
+        group: named
+   
+    - name: Allowing DNS traffice in the firewall.
+      firewalld:
+        service: dns
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Starting & enabling the DNS service.
+      service:
+        name: named
+        state: started
+        enabled: yes
+...      
+

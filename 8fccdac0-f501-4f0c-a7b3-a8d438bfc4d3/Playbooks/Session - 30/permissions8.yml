@@ -1,0 +1,11 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Create a directory if it does not exist
+      file:
+        path: /etc/linux
+        state: directory
+        mode: '0755'
+...

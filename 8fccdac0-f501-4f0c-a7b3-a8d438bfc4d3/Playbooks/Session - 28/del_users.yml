@@ -1,0 +1,15 @@
+---
+- name: Deleting Users & Groups
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Deleting The User Vijay Sharma
+      user:
+        name: vijay
+        state: absent
+
+    - name: Deleting The Group nehraclasses
+      group:
+        name: nehraclasses
+        state: absent
+...

@@ -1,0 +1,13 @@
+---
+- name: manage networking
+  hosts: node1
+  become: true
+  tasks:
+    - name: Delete the existing connection for adding 2 additional IPv4 Addresses
+      community.general.nmcli:
+        conn_name: ens224
+        ifname: ens224
+        type: ethernet
+        state: absent
+...
+

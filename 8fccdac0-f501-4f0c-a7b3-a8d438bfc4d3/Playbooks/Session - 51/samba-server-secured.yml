@@ -1,0 +1,72 @@
+---
+- name: Samba Server Configuration Playbook
+  hosts: node1
+  become: true
+  tasks:
+    - name: Setting up the static hostname in the machine.
+      hostname:
+        name: samba.nehraclasses.local
+        use: systemd
+
+    - name: Installing the Samba Packages
+      dnf:
+        name: samba*
+        state: latest
+
+    - name: Creating group for the samba users
+      group:
+        name: securedgroup
+        state: present
+
+    - name: Creating samba user with securedgroup membership.
+      user:
+       name: demo
+       shell: /bin/bash
+       groups: securedgroup
+       append: yes
+
+    - name: Adding the demo user to samba database and setting its password.
+      shell: "printf 'redhat\nredhat\n' | smbpasswd -a demo"
+
+    - name: Creating the directory for the secured samba share.
+      file:
+        path: /srv/samba/secured
+        mode: '0770'
+        state: directory
+        owner: root
+        group: securedgroup
+
+    - name: Managing SELinux label on the samba share directory.
+      command: chcon -t samba_share_t /srv/samba/secured
+
+    - name: Copying the samba configuration file on the managed node.
+      template:
+        src: smb2.conf.j2
+        dest: /etc/samba/smb.conf
+        force: true
+      notify: Restarting Services
+
+    - name: Allowing samba traffic in the firewall.
+      firewalld:
+        service: samba
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+    - name: Starting & enabling the smb & nmb services.
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - smb
+        - nmb
+  handlers:
+     - name: Restarting Services
+       systemd:
+        name: "{{ item }}"
+        state: restarted
+       loop:
+         - smb
+         - nmb
+...

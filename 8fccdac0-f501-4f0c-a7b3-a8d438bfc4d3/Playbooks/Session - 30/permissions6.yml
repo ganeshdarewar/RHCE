@@ -1,0 +1,11 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Touch the same file, but add/remove some permissions
+      file:
+        path: /etc/linux.conf
+        state: touch
+        mode: u+rw,g-wx,o-rwx
+...

@@ -1,0 +1,11 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Set/Reset an xfs filesystem UUID on /dev/sda1
+      filesystem:
+         fstype: xfs
+         dev: /dev/sda1
+         uuid: generate
+...

@@ -1,0 +1,19 @@
+---
+- name: Managing Storage Space Using Ansible
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove partition number 2 created in the previous task
+      parted:
+        device: /dev/sda
+        number: 2
+        state: absent
+
+    - name: Create a new primary partition with a size of 1GiB at disk's end
+      parted:
+        device: /dev/sda
+        number: 3
+        state: present
+        fs_type: ext3
+        part_start: -1GiB
+...

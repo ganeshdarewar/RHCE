@@ -1,0 +1,41 @@
+---
+- name: CUPS Print Server Configuration Playbook
+  hosts: node1
+  become: true
+  tasks:
+    - name: Setting up the static hostname in the machine.
+      hostname:
+        name: print-server.nehraclasses.local
+        use: systemd
+
+    - name: Installing CUPS packages in the machine.
+      dnf:
+        name: cups
+        state: latest
+
+    - name: Making changes in the configuration file.
+      lineinfile:
+        path: /etc/cups/cupsd.conf
+        insertafter: "Order allow,deny"
+        line: "Allow @LOCAL"
+
+    - name: Allowing TCP port 631 traffic in the firewall.
+      firewalld:
+        port: 631/tcp
+        zone: public
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Starting & enabling the Cups service.
+      service:
+        name: cups
+        state: started
+        enabled: yes
+
+    - name: Starting & enabling the Cups-browsed service.
+      service:
+        name: cups-browsed
+        state: started
+        enabled: yes
+...

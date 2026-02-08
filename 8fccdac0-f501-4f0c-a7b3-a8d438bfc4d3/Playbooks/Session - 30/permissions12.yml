@@ -1,0 +1,15 @@
+---
+- name: managing the file permissions using ansible.
+  hosts: node1
+  become: true
+  tasks:
+    - name: Remove file (delete file)
+      file:
+          path: /etc/linux.conf
+          state: absent
+
+    - name: Recursively remove directory
+      file:
+        path: /etc/linux
+        state: absent
+...

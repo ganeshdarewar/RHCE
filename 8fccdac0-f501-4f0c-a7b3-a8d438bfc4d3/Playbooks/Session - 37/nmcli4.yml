@@ -1,0 +1,22 @@
+---
+- name: manage networking
+  hosts: node1
+  become: true
+  tasks:
+    - name: Modify the existing connection for adding 2 additional IPv4 Address
+      community.general.nmcli:
+        conn_name: ens224
+        ifname: ens224
+        type: ethernet
+        ip4:
+           - 192.168.229.150/24
+           - 192.168.229.144/24
+           - 192.168.229.142/24
+        gw4: 192.168.229.128
+        dns4:
+           - 8.8.8.8
+           - 192.168.1.1
+        state: present
+        autoconnect: true
+...
+

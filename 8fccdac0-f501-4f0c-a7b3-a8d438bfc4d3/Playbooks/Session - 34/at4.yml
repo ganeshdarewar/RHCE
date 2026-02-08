@@ -1,0 +1,13 @@
+---
+- name: Schedule Future Jobs
+  hosts: node1
+  become: true
+  tasks:
+    - name: Schedule a command to execute in 20 minutes making sure it is unique in the queue
+      ansible.posix.at:
+        command: ls -d / >/dev/null
+        count: 20
+        units: minutes
+        unique: true
+...
+

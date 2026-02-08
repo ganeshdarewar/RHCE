@@ -1,0 +1,18 @@
+---
+- name: Manage Firewall
+  hosts: node1
+  become: true
+  tasks:
+    - ansible.posix.firewalld:
+        masquerade: true
+        state: enabled
+        permanent: true
+        zone: dmz
+        immediate: true
+
+    - ansible.posix.firewalld:
+        zone: custom
+        state: present
+        permanent: true
+...
+

@@ -1,0 +1,28 @@
+
+################ to run the ansible script where control node vault file is used ##############
+[nehraclasses@server yum.repos.d]$ ansible rhel \
+  -m command \
+  -a "subscription-manager register --username={{ rhsm_username }} --password={{ rhsm_password }}" \
+  --ask-vault-pass \
+  -b \
+  --extra-vars "@/home/nehraclasses/rhsm_creds.yml"
+Vault password:
+rhel-client | CHANGED | rc=0 >>
+Registering to: subscription.rhsm.redhat.com:443/subscription
+The system has been registered with ID: c8d9d581-6770-4380-b4a8-d354084e88e9
+The registered system name is: rhel-client.exmaple.com
+[nehraclasses@server yum.repos.d]$
+
+
+
+ ansible rhel   -m command   -a "subscription-manager register --username={{ rhsm_username }} --password={{ rhsm_password }}"   --ask-vault-pass   -b   --extra-vars "@/home/nehraclasses/rhsm_creds.yml"
+
+
+
+
+############## to create the vault file ##############
+
+ sudo ansible-vault create rhsm_creds.yml
+
+rhsm_username: your_username
+rhsm_password: your_password
